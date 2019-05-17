@@ -1,11 +1,12 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch} from 'react-router-dom';
 import routes from './Routes';
+import {Navbar} from './common/Navbar';
 
 function App() {
   return (
     <React.Fragment>
-      <h1>Bienvenidos a mi app!!</h1>
+      <Navbar />
       <Router>
         <Switch>
           { routes }

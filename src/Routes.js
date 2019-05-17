@@ -1,7 +1,11 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import HolaMundo from './components/HolaMundo/HolaMundo';
+import {Login} from './components/Login';
+import {SignUp} from './components/SignUp';
 
 export default [
-    <Route exact path="/HolaMundo" component={HolaMundo} ></Route>
+    <React.Fragment>
+        <Route exact path="/login" component={ Login }></Route>
+        <Route exact path="/signup" component={ SignUp} ></Route>
+    </React.Fragment>
 ];
