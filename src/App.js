@@ -1,15 +1,17 @@
 import React from 'react';
-import HolaMundo from './components/HolaMundo/HolaMundo';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import routes from './Routes';
 
 function App() {
   return (
-    <div className="container">
-      <h1>App Component</h1>
-      <div className="App">
-        <p>lorem ipsum dolor sit amet bla bla bla</p>
-      </div>
-      <HolaMundo />
-    </div>
+    <React.Fragment>
+      <h1>Bienvenidos a mi app!!</h1>
+      <Router>
+        <Switch>
+          { routes }
+        </Switch>
+      </Router>
+    </React.Fragment>
   );
 }
 
