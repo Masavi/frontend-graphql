@@ -12,51 +12,80 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 
-export default class Example extends React.Component {
-  constructor(props) {
-    super(props);
+  import { Link } from 'react-router-dom';
+
+  import payload from '../../payload';
+  import isAuthenticated from '../../isAuthenticated';
+
+export default class NavbarComponent extends React.Component {
+  constructor() {
+    super();
 
     this.toggle = this.toggle.bind(this);
     this.state = {
+      authenticated: localStorage.getItem('appToken') !== null,
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
+  authenticatedRender = () => {
+    if(isAuthenticated()){
+      return(
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to={`/users/${payload()._id}`}>
+              Bienvenido {payload().email}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href='/create-post'>
+              Nuevo Post
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href='/logout'>
+              Cerrar Sesion
+            </a>
+          </li>
+        </ul>
+      )
+    } else {
+      return(      
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href='/login'>
+              Inicia Sesion
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href='/signup'>
+              Registrate
+            </a>
+          </li>
+      </ul>
+     )
+    }
+  }
+
   render() {
     return (
       <div>
         <Navbar style={{backgroundColor: '#f1f1f1'}} light expand="md">
-          <NavbarBrand href="/">reactstrap</NavbarBrand>
+          <NavbarBrand href="/">My app</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <div>
+                {
+                  this.authenticatedRender()
+                }
+              </div>
             </Nav>
           </Collapse>
         </Navbar>
